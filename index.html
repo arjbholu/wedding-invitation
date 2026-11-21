@@ -806,6 +806,13 @@
  coverNoteTextRavi.parentElement.classList.add("long");
  }
 
+ /* ----- Sravani-only cover note: personalised mission note, wedding not revealed ----- */
+ if (guest.toLowerCase() === "sravani") {
+ var coverNoteTextSravani = document.getElementById("coverNoteText");
+ setCoverNote(coverNoteTextSravani, "Hey Sravani, you have been chosen by Arjav for a very important mission. Yes, chosen, not asked, chosen, so there is no escape now. Arjav says you are Ravi's wife, and he really enjoyed showing you around London when you recently came here. He says you roamed a lot together, hung out a lot, and he really liked your company, and you became good friends. He trusts you with important things, which is brave, considering you have only known him a short time and still decided to stay friends. Open the next page to find out what the mission is. No excuses, no disappearing, your orders are clear.", "Sravani");
+ coverNoteTextSravani.parentElement.classList.add("long");
+ }
+
  /* ----- cover: tap to open ----- */
  var cover = document.getElementById("cover");
  var openBtn = document.getElementById("openBtn");
