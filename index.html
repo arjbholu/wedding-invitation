@@ -748,6 +748,31 @@
  coverNoteTextDulle.parentElement.classList.add("long");
  }
 
+ /* ----- HimaSiddharth-only cover note: personalised mission note, wedding not revealed ----- */
+ if (guest.toLowerCase() === "himasiddharth") {
+ var coverNoteTextHimaSiddharth = document.getElementById("coverNoteText");
+ var himaSiddharthText = "Hey Hima and Siddharth, you have both been chosen by Arjav for a very important mission. Yes, chosen, not asked, chosen, so there is no escape now. Arjav says you are his best friends in London, and honestly, he talks about you a lot. He still talks about meeting you both in 2022, and how you got close later, over time, and became like close family to him, especially since he lives so close to you. He says he loves the time you spend together, the trips together, the runs together, and the Fridays together, which, according to him, are sacred and non-negotiable. He also says he loves how you are as a couple, how you complement each other and complete each other, and how happy you are together, and he wants to be as happy as you two. He loves you both a lot, and he trusts you both with important things, which is saying a lot, because you have known him since 2022 and you still show up for him. Open the next page to find out what the mission is. No excuses, no disappearing, your orders are clear.";
+ var himaSiddharthNames = ["Hima", "Siddharth"];
+ coverNoteTextHimaSiddharth.textContent = "";
+ var himaSiddharthRemaining = himaSiddharthText;
+ while (himaSiddharthRemaining.length) {
+ var hsIdx = -1;
+ var hsName = null;
+ himaSiddharthNames.forEach(function (n) {
+ var idx = himaSiddharthRemaining.indexOf(n);
+ if (idx !== -1 && (hsIdx === -1 || idx < hsIdx)) { hsIdx = idx; hsName = n; }
+ });
+ if (hsIdx === -1) { coverNoteTextHimaSiddharth.appendChild(document.createTextNode(himaSiddharthRemaining)); break; }
+ if (hsIdx > 0) coverNoteTextHimaSiddharth.appendChild(document.createTextNode(himaSiddharthRemaining.slice(0, hsIdx)));
+ var hsSpan = document.createElement("span");
+ hsSpan.className = "cover-guest";
+ hsSpan.textContent = hsName;
+ coverNoteTextHimaSiddharth.appendChild(hsSpan);
+ himaSiddharthRemaining = himaSiddharthRemaining.slice(hsIdx + hsName.length);
+ }
+ coverNoteTextHimaSiddharth.parentElement.classList.add("long");
+ }
+
  /* ----- cover: tap to open ----- */
  var cover = document.getElementById("cover");
  var openBtn = document.getElementById("openBtn");
