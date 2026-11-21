@@ -820,6 +820,13 @@
  coverNoteTextOJ.parentElement.classList.add("long");
  }
 
+ /* ----- Deepanshu-only cover note: personalised mission note, wedding not revealed ----- */
+ if (guest.toLowerCase() === "deepanshu") {
+ var coverNoteTextDeepanshu = document.getElementById("coverNoteText");
+ setCoverNote(coverNoteTextDeepanshu, "Hey Deepanshu, you have been chosen by Arjav for a very important mission. Yes, chosen, not asked, chosen, so there is no escape now. Arjav says you are his close friend, one of his best friends in London, and honestly, he talks about you a lot. He says you were the first person he met in London, and since then, you have never looked back, you have always been so close. He says you met through friends, he was introduced by his friend, you were introduced by your friend, and both of those friends got married, which, according to him, is a very good way to meet a best friend. He cherishes a lot of the talks you had in KX while you were finding partners, and all the different things you did together, the trips together, the runs together, and everything in between. He says you are just so close, and he really loves you a lot. He trusts you with important things, which is brave, considering you have known him since his first days in London and still decided to stay friends. Open the next page to find out what the mission is. No excuses, no disappearing, your orders are clear.", "Deepanshu");
+ coverNoteTextDeepanshu.parentElement.classList.add("long");
+ }
+
  /* ----- cover: tap to open ----- */
  var cover = document.getElementById("cover");
  var openBtn = document.getElementById("openBtn");
