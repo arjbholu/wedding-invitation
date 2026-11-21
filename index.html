@@ -813,6 +813,13 @@
  coverNoteTextSravani.parentElement.classList.add("long");
  }
 
+ /* ----- OJ-only cover note: personalised mission note, wedding not revealed ----- */
+ if (guest.toLowerCase() === "oj") {
+ var coverNoteTextOJ = document.getElementById("coverNoteText");
+ setCoverNote(coverNoteTextOJ, "Hey OJ, you have been chosen by Arjav for a very important mission. Yes, chosen, not asked, chosen, so there is no escape now. Arjav says you are one of his best friends in London, and honestly, he talks about you a lot. He says he just likes hanging out with you, and he likes talking with you about a lot of different things, about books, and about all the different views you have on different topics. He says those conversations are the best part, you always have something interesting to say, and you always make him think. And jokingly, he likes how you talk about KS, and how you talk about your own toxicity, like it is a badge of honour. He loves you a lot, and he trusts you with important things, which is brave, considering you will probably have a strong opinion about this mission too. Open the next page to find out what the mission is. No excuses, no disappearing, your orders are clear.", "OJ");
+ coverNoteTextOJ.parentElement.classList.add("long");
+ }
+
  /* ----- cover: tap to open ----- */
  var cover = document.getElementById("cover");
  var openBtn = document.getElementById("openBtn");
