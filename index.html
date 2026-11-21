@@ -799,6 +799,13 @@
  coverNoteTextPatan.parentElement.classList.add("long");
  }
 
+ /* ----- Ravi-only cover note: personalised mission note, wedding not revealed ----- */
+ if (guest.toLowerCase() === "ravi") {
+ var coverNoteTextRavi = document.getElementById("coverNoteText");
+ setCoverNote(coverNoteTextRavi, "Hey Ravi, you have been chosen by Arjav for a very important mission. Yes, chosen, not asked, chosen, so there is no escape now. Arjav says you are a very good friend, and honestly, he talks about you a lot. He still talks about Microsoft, and how the time there was great because you were there with him. He says you used to have chai together, bitch about your managers together, hang out a lot together, and play a lot together, which, according to him, was the best part of Microsoft. He says the work was work, but the time with you made it great. He also says that even after Microsoft, you stayed friends, you talked on calls, and you made sure you could call each other and remain close. He loves you a lot, and he trusts you with important things, which is brave, considering you have known him since Microsoft and still decided to stay friends. Open the next page to find out what the mission is. No excuses, no disappearing, your orders are clear.", "Ravi");
+ coverNoteTextRavi.parentElement.classList.add("long");
+ }
+
  /* ----- cover: tap to open ----- */
  var cover = document.getElementById("cover");
  var openBtn = document.getElementById("openBtn");
