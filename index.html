@@ -682,9 +682,10 @@
  var params = new URLSearchParams(window.location.search);
  var guest = (params.get("to") || "").trim().slice(0, 40);
  if (guest) {
- document.getElementById("guestName").textContent = guest;
- document.getElementById("coverGuestName").textContent = guest;
- document.title = "Baboi " + guest + "! Arjav & Siddhi's Wedding Mission";
+ var displayGuest = guest.toLowerCase() === "patanclosefriends" ? "Jainish, Neel, Nishi and Het" : guest;
+ document.getElementById("guestName").textContent = displayGuest;
+ document.getElementById("coverGuestName").textContent = displayGuest;
+ document.title = "Baboi " + displayGuest + "! Arjav & Siddhi's Wedding Mission";
  }
 
  /* ----- cover note: keep the personalised name red, rest unchanged ----- */
@@ -771,6 +772,31 @@
  himaSiddharthRemaining = himaSiddharthRemaining.slice(hsIdx + hsName.length);
  }
  coverNoteTextHimaSiddharth.parentElement.classList.add("long");
+ }
+
+ /* ----- Patan close friends group cover note: personalised mission note, wedding not revealed ----- */
+ if (guest.toLowerCase() === "patanclosefriends") {
+ var coverNoteTextPatan = document.getElementById("coverNoteText");
+ var patanText = "Hey Jainish, Neel, Nishi and Het, you have all been chosen by Arjav for a very important mission. Yes, chosen, not asked, chosen, so there is no escape now. Arjav says you are his closest friends in Patan, and honestly, he talks about you a lot. He has known you since he started understanding how the world works, since childhood, and you have been a part of his growing up. He says you are very close to him, and he really loves the time he spends with you whenever he is in Patan. He still talks about school, the classes, making fun of teachers, and all the silly stuff you did together, which, according to him, was the best part of school. He loves you all a lot, and he trusts you all with important things, which is brave, considering you have known him since school and still decided to stay friends. Open the next page to find out what the mission is. No excuses, no disappearing, your orders are clear.";
+ var patanNames = ["Jainish", "Neel", "Nishi", "Het"];
+ coverNoteTextPatan.textContent = "";
+ var patanRemaining = patanText;
+ while (patanRemaining.length) {
+ var patanIdx = -1;
+ var patanName = null;
+ patanNames.forEach(function (n) {
+ var idx = patanRemaining.indexOf(n);
+ if (idx !== -1 && (patanIdx === -1 || idx < patanIdx)) { patanIdx = idx; patanName = n; }
+ });
+ if (patanIdx === -1) { coverNoteTextPatan.appendChild(document.createTextNode(patanRemaining)); break; }
+ if (patanIdx > 0) coverNoteTextPatan.appendChild(document.createTextNode(patanRemaining.slice(0, patanIdx)));
+ var patanSpan = document.createElement("span");
+ patanSpan.className = "cover-guest";
+ patanSpan.textContent = patanName;
+ coverNoteTextPatan.appendChild(patanSpan);
+ patanRemaining = patanRemaining.slice(patanIdx + patanName.length);
+ }
+ coverNoteTextPatan.parentElement.classList.add("long");
  }
 
  /* ----- cover: tap to open ----- */
