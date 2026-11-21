@@ -694,6 +694,13 @@
  coverNoteText.parentElement.classList.add("long");
  }
 
+ /* ----- Monit-only cover note: personalised mission note, wedding not revealed ----- */
+ if (guest.toLowerCase() === "monit") {
+ var coverNoteTextMonit = document.getElementById("coverNoteText");
+ coverNoteTextMonit.textContent = "Hey Monit, you have been chosen by Arjav for a very important mission. Yes, chosen, not asked, chosen, so there is no escape now. Arjav says you are one of his closest friends, and honestly, he talks about you a lot. He still talks about meeting you in college in 2013, his best friend from college, a fellow Gujarati, and all those train journeys together to Dhanbad, which, according to him, were less about the destination and more about the non-stop talking, laughing, and questionable train food. He says the bond never broke after college, even with the distance. Every time he goes back to India, meeting you is non-negotiable, and he still remembers that he could not make it to your wedding, so this one, he is counting on you. He also says you are very funny, you have a great appetite for doing business, and you somehow manage to do all of that while working at IOCL in Ahmedabad. He trusts you with important things, which is brave, considering your business ideas usually start with \"just hear me out\". Open the next page to find out what the mission is. No excuses, no disappearing, your orders are clear.";
+ coverNoteTextMonit.parentElement.classList.add("long");
+ }
+
  /* ----- cover: tap to open ----- */
  var cover = document.getElementById("cover");
  var openBtn = document.getElementById("openBtn");
