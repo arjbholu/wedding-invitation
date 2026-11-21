@@ -687,17 +687,32 @@
  document.title = "Baboi " + guest + "! Arjav & Siddhi's Wedding Mission";
  }
 
+ /* ----- cover note: keep the personalised name red, rest unchanged ----- */
+ function setCoverNote(noteEl, fullText, name) {
+ noteEl.textContent = "";
+ var parts = fullText.split(name);
+ for (var i = 0; i < parts.length; i++) {
+ if (i > 0) {
+ var nameSpan = document.createElement("span");
+ nameSpan.className = "cover-guest";
+ nameSpan.textContent = name;
+ noteEl.appendChild(nameSpan);
+ }
+ if (parts[i]) noteEl.appendChild(document.createTextNode(parts[i]));
+ }
+ }
+
  /* ----- Praveen-only cover note: personalised mission note, wedding not revealed ----- */
  if (guest.toLowerCase() === "praveen") {
  var coverNoteText = document.getElementById("coverNoteText");
- coverNoteText.textContent = "Hey Praveen, you have been chosen by Arjav for a very important mission. Yes, chosen, not asked, chosen, so there is no escape now. Arjav says you are one of his closest friends in London, and honestly, he talks about you a lot. He still talks about joining Meta together in 2022, like it was the start of a great adventure, which, to be fair, it kind of was. He says the Friday hangouts are sacred, the London to Paris bike ride proved you both have more stamina than sense, the half marathon proved you both have more sense than stamina, and Iceland in summer proved you both can still get cold even when it is supposed to be warm. He also says you survived moving to the US and coming back to London, switching to Reddit, and worst of all, all his terrible jokes, so you are clearly qualified for this mission. He trusts you with important things, which is brave, considering you are a total geek on AI and will probably try to automate this mission too. Open the next page to find out what the mission is. No excuses, no disappearing, your orders are clear.";
+ setCoverNote(coverNoteText, "Hey Praveen, you have been chosen by Arjav for a very important mission. Yes, chosen, not asked, chosen, so there is no escape now. Arjav says you are one of his closest friends in London, and honestly, he talks about you a lot. He still talks about joining Meta together in 2022, like it was the start of a great adventure, which, to be fair, it kind of was. He says the Friday hangouts are sacred, the London to Paris bike ride proved you both have more stamina than sense, the half marathon proved you both have more sense than stamina, and Iceland in summer proved you both can still get cold even when it is supposed to be warm. He also says you survived moving to the US and coming back to London, switching to Reddit, and worst of all, all his terrible jokes, so you are clearly qualified for this mission. He trusts you with important things, which is brave, considering you are a total geek on AI and will probably try to automate this mission too. Open the next page to find out what the mission is. No excuses, no disappearing, your orders are clear.", "Praveen");
  coverNoteText.parentElement.classList.add("long");
  }
 
  /* ----- Monit-only cover note: personalised mission note, wedding not revealed ----- */
  if (guest.toLowerCase() === "monit") {
  var coverNoteTextMonit = document.getElementById("coverNoteText");
- coverNoteTextMonit.textContent = "Hey Monit, you have been chosen by Arjav for a very important mission. Yes, chosen, not asked, chosen, so there is no escape now. Arjav says you are one of his closest friends, and honestly, he talks about you a lot. He still talks about meeting you in college in 2013, his best friend from college, a fellow Gujarati, and all those train journeys together to Dhanbad, which, according to him, were less about the destination and more about the non-stop talking, laughing, and questionable train food. He says the bond never broke after college, even with the distance. Every time he goes back to India, meeting you is non-negotiable, and he still remembers that he could not make it to your wedding, so this one, he is counting on you. He also says you are very funny, you have a great appetite for doing business, and you somehow manage to do all of that while working at IOCL in Ahmedabad. He trusts you with important things, which is brave, considering your business ideas usually start with \"just hear me out\". Open the next page to find out what the mission is. No excuses, no disappearing, your orders are clear.";
+ setCoverNote(coverNoteTextMonit, "Hey Monit, you have been chosen by Arjav for a very important mission. Yes, chosen, not asked, chosen, so there is no escape now. Arjav says you are one of his closest friends, and honestly, he talks about you a lot. He still talks about meeting you in college in 2013, his best friend from college, a fellow Gujarati, and all those train journeys together to Dhanbad, which, according to him, were less about the destination and more about the non-stop talking, laughing, and questionable train food. He says the bond never broke after college, even with the distance. Every time he goes back to India, meeting you is non-negotiable, and he still remembers that he could not make it to your wedding, so this one, he is counting on you. He also says you are very funny, you have a great appetite for doing business, and you somehow manage to do all of that while working at IOCL in Ahmedabad. He trusts you with important things, which is brave, considering your business ideas usually start with \"just hear me out\". Open the next page to find out what the mission is. No excuses, no disappearing, your orders are clear.", "Monit");
  coverNoteTextMonit.parentElement.classList.add("long");
  }
 
