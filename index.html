@@ -683,8 +683,9 @@
  var guest = (params.get("to") || "").trim().slice(0, 40);
  var invite = (params.get("invite") || "").trim().toLowerCase().slice(0, 40);
  var isAkashAlishaInvite = invite === "a83kx9m2";
- if (isAkashAlishaInvite || guest) {
- var displayGuest = isAkashAlishaInvite ? "Akash and Alisha" : guest.toLowerCase() === "patanclosefriends" ? "Jainish, Neel, Nishi and Het" : guest.toLowerCase() === "kaluauriane" ? "Kalu and Auriane" : guest;
+ var isBrijeshAnamikaInvite = invite === "b7r2k8m4";
+ if (isAkashAlishaInvite || isBrijeshAnamikaInvite || guest) {
+ var displayGuest = isAkashAlishaInvite ? "Akash and Alisha" : isBrijeshAnamikaInvite ? "Brijesh and Anamika" : guest.toLowerCase() === "patanclosefriends" ? "Jainish, Neel, Nishi and Het" : guest.toLowerCase() === "kaluauriane" ? "Kalu and Auriane" : guest;
  document.getElementById("guestName").textContent = displayGuest;
  document.getElementById("coverGuestName").textContent = displayGuest;
  document.title = "Baboi " + displayGuest + "! Arjav & Siddhi's Wedding Mission";
@@ -886,6 +887,31 @@
  coverNoteTextAkashAlisha.parentElement.classList.add("long");
  }
 
+ /* ----- Brijesh and Anamika invite-code cover note: invite-code only, wedding not revealed ----- */
+ if (isBrijeshAnamikaInvite) {
+ var coverNoteTextBrijeshAnamika = document.getElementById("coverNoteText");
+ var brijeshAnamikaText = "Hey Brijesh and Anamika, you have both been chosen by Arjav for a very important mission. Yes, chosen, not asked, chosen, so there is no escape now. Arjav says you are his close friends, and honestly, he talks about you a lot. He still talks about knowing Brijesh since the boot camp days, and how you became very close in boot camp, going on a lot of hikes and a lot of trips together in the beginning, when you both joined Meta, and how great that was. He says Brijesh slowly became one of his closest friends in London, and he is very lucky to have him. And even though you both joined Meta, and Brijesh left Meta, you still kept close after that, whatever happened, you still made sure you kept in contact and remained close. He also says Anamika is a really great woman, and Brijesh is very lucky to have her. He says you both complement and complete each other, you are a really happy couple, and he would want to be like you both. He loves you both a lot, and he trusts you both with important things, which is brave, considering you have known him since boot camp and still decided to stay friends. Open the next page to find out what the mission is. No excuses, no disappearing, your orders are clear.";
+ var brijeshAnamikaNames = ["Brijesh", "Anamika"];
+ coverNoteTextBrijeshAnamika.textContent = "";
+ var brijeshAnamikaRemaining = brijeshAnamikaText;
+ while (brijeshAnamikaRemaining.length) {
+ var baIdx = -1;
+ var baName = null;
+ brijeshAnamikaNames.forEach(function (n) {
+ var idx = brijeshAnamikaRemaining.indexOf(n);
+ if (idx !== -1 && (baIdx === -1 || idx < baIdx)) { baIdx = idx; baName = n; }
+ });
+ if (baIdx === -1) { coverNoteTextBrijeshAnamika.appendChild(document.createTextNode(brijeshAnamikaRemaining)); break; }
+ if (baIdx > 0) coverNoteTextBrijeshAnamika.appendChild(document.createTextNode(brijeshAnamikaRemaining.slice(0, baIdx)));
+ var baSpan = document.createElement("span");
+ baSpan.className = "cover-guest";
+ baSpan.textContent = baName;
+ coverNoteTextBrijeshAnamika.appendChild(baSpan);
+ brijeshAnamikaRemaining = brijeshAnamikaRemaining.slice(baIdx + baName.length);
+ }
+ coverNoteTextBrijeshAnamika.parentElement.classList.add("long");
+ }
+
  /* ----- cover: tap to open ----- */
  var cover = document.getElementById("cover");
  var openBtn = document.getElementById("openBtn");
@@ -966,6 +992,8 @@
  }
  if (isAkashAlishaInvite) {
  rsvpMsg.value = "Baboi Arjav! It's Akash and Alisha. I'm in for the wedding mission, 27 to 29 January 2027. Reporting for duty!";
+ } else if (isBrijeshAnamikaInvite) {
+ rsvpMsg.value = "Baboi Arjav! It's Brijesh and Anamika. I'm in for the wedding mission, 27 to 29 January 2027. Reporting for duty!";
  } else if (guest) {
  rsvpMsg.value = "Baboi Arjav! It's " + (guest.toLowerCase() === "kaluauriane" ? "Kalu and Auriane" : guest) + ". I'm in for the wedding mission, 27 to 29 January 2027. Reporting for duty!";
  }
@@ -999,10 +1027,11 @@
  var guestKey = guestRaw.toLowerCase();
  var inviteRaw = (params.get("invite") || "").trim().toLowerCase().slice(0, 40);
  var isAkashAlishaInviteGu = inviteRaw === "a83kx9m2";
+ var isBrijeshAnamikaInviteGu = inviteRaw === "b7r2k8m4";
  var personalised = ["praveen","monit","drupad","dulle","himasiddharth","patanclosefriends","ravi","sravani","oj","deepanshu","kaluauriane","manthan"];
- var isPersonalised = isAkashAlishaInviteGu || personalised.indexOf(guestKey) !== -1;
- var displayGuest = isAkashAlishaInviteGu ? "Akash and Alisha" : guestKey === "patanclosefriends" ? "Jainish, Neel, Nishi and Het" : guestKey === "kaluauriane" ? "Kalu and Auriane" : guestRaw;
- var hasGuestDisplay = isAkashAlishaInviteGu || !!guestRaw;
+ var isPersonalised = isAkashAlishaInviteGu || isBrijeshAnamikaInviteGu || personalised.indexOf(guestKey) !== -1;
+ var displayGuest = isAkashAlishaInviteGu ? "Akash and Alisha" : isBrijeshAnamikaInviteGu ? "Brijesh and Anamika" : guestKey === "patanclosefriends" ? "Jainish, Neel, Nishi and Het" : guestKey === "kaluauriane" ? "Kalu and Auriane" : guestRaw;
+ var hasGuestDisplay = isAkashAlishaInviteGu || isBrijeshAnamikaInviteGu || !!guestRaw;
 
  function setText(el, txt) { if (el) el.textContent = txt; }
  function firstText(el, txt) { if (el && el.childNodes.length && el.childNodes[0].nodeType === 3) el.childNodes[0].textContent = txt; }
