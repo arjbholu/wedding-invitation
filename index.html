@@ -682,7 +682,7 @@
  var params = new URLSearchParams(window.location.search);
  var guest = (params.get("to") || "").trim().slice(0, 40);
  if (guest) {
- var displayGuest = guest.toLowerCase() === "patanclosefriends" ? "Jainish, Neel, Nishi and Het" : guest;
+ var displayGuest = guest.toLowerCase() === "patanclosefriends" ? "Jainish, Neel, Nishi and Het" : guest.toLowerCase() === "kaluauriane" ? "Kalu and Auriane" : guest;
  document.getElementById("guestName").textContent = displayGuest;
  document.getElementById("coverGuestName").textContent = displayGuest;
  document.title = "Baboi " + displayGuest + "! Arjav & Siddhi's Wedding Mission";
@@ -827,6 +827,31 @@
  coverNoteTextDeepanshu.parentElement.classList.add("long");
  }
 
+ /* ----- KaluAuriane-only cover note: personalised mission note, wedding not revealed ----- */
+ if (guest.toLowerCase() === "kaluauriane") {
+ var coverNoteTextKaluAuriane = document.getElementById("coverNoteText");
+ var kaluAurianeText = "Hey Kalu and Auriane, you have both been chosen by Arjav for a very important mission. Yes, chosen, not asked, chosen, so there is no escape now. Arjav says you are his close friends, and honestly, he talks about you a lot. He still talks about meeting Kalu in college, living close to each other, and having a lot of fun together in the fourth and fifth year. He says that after college, Kalu moved to Germany and he moved to London, and somehow you became even closer after that. You went on trips together, Kalu visited him in London, and he visited Kalu in Germany during his wedding, which was a really special moment for him. He also says Kalu is very lucky to have Auriane as his partner, because she is really sweet, and a really great woman. He really likes how she is as a person, very calm, very centred, and really great for Kalu, and he had a great time during their wedding. He loves you both a lot, and he trusts you both with important things, which is brave, considering you have known him since college and still decided to stay friends. Open the next page to find out what the mission is. No excuses, no disappearing, your orders are clear.";
+ var kaluAurianeNames = ["Kalu", "Auriane"];
+ coverNoteTextKaluAuriane.textContent = "";
+ var kaluAurianeRemaining = kaluAurianeText;
+ while (kaluAurianeRemaining.length) {
+ var kaIdx = -1;
+ var kaName = null;
+ kaluAurianeNames.forEach(function (n) {
+ var idx = kaluAurianeRemaining.indexOf(n);
+ if (idx !== -1 && (kaIdx === -1 || idx < kaIdx)) { kaIdx = idx; kaName = n; }
+ });
+ if (kaIdx === -1) { coverNoteTextKaluAuriane.appendChild(document.createTextNode(kaluAurianeRemaining)); break; }
+ if (kaIdx > 0) coverNoteTextKaluAuriane.appendChild(document.createTextNode(kaluAurianeRemaining.slice(0, kaIdx)));
+ var kaSpan = document.createElement("span");
+ kaSpan.className = "cover-guest";
+ kaSpan.textContent = kaName;
+ coverNoteTextKaluAuriane.appendChild(kaSpan);
+ kaluAurianeRemaining = kaluAurianeRemaining.slice(kaIdx + kaName.length);
+ }
+ coverNoteTextKaluAuriane.parentElement.classList.add("long");
+ }
+
  /* ----- cover: tap to open ----- */
  var cover = document.getElementById("cover");
  var openBtn = document.getElementById("openBtn");
@@ -906,7 +931,7 @@
  if (msg) rsvpBtn.href = "https://wa.me/447787001858?text=" + encodeURIComponent(msg);
  }
  if (guest) {
- rsvpMsg.value = "Baboi Arjav! It's " + guest + ". I'm in for the wedding mission, 27 to 29 January 2027. Reporting for duty!";
+ rsvpMsg.value = "Baboi Arjav! It's " + (guest.toLowerCase() === "kaluauriane" ? "Kalu and Auriane" : guest) + ". I'm in for the wedding mission, 27 to 29 January 2027. Reporting for duty!";
  }
  rsvpMsg.addEventListener("input", syncRSVP);
  syncRSVP();
