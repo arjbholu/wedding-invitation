@@ -681,8 +681,10 @@
  /* ----- personal greeting from ?to= ----- */
  var params = new URLSearchParams(window.location.search);
  var guest = (params.get("to") || "").trim().slice(0, 40);
- if (guest) {
- var displayGuest = guest.toLowerCase() === "patanclosefriends" ? "Jainish, Neel, Nishi and Het" : guest.toLowerCase() === "kaluauriane" ? "Kalu and Auriane" : guest;
+ var invite = (params.get("invite") || "").trim().toLowerCase().slice(0, 40);
+ var isAkashAlishaInvite = invite === "a83kx9m2";
+ if (isAkashAlishaInvite || guest) {
+ var displayGuest = isAkashAlishaInvite ? "Akash and Alisha" : guest.toLowerCase() === "patanclosefriends" ? "Jainish, Neel, Nishi and Het" : guest.toLowerCase() === "kaluauriane" ? "Kalu and Auriane" : guest;
  document.getElementById("guestName").textContent = displayGuest;
  document.getElementById("coverGuestName").textContent = displayGuest;
  document.title = "Baboi " + displayGuest + "! Arjav & Siddhi's Wedding Mission";
@@ -859,6 +861,31 @@
  coverNoteTextManthan.parentElement.classList.add("long");
  }
 
+ /* ----- Akash and Alisha invite-code cover note: invite-code only, wedding not revealed ----- */
+ if (isAkashAlishaInvite) {
+ var coverNoteTextAkashAlisha = document.getElementById("coverNoteText");
+ var akashAlishaText = "Hey Akash and Alisha, you have both been chosen by Arjav for a very important mission. Yes, chosen, not asked, chosen, so there is no escape now. Arjav says you are his close friends, and honestly, he talks about you a lot. He still talks about Akash being in the same team since he joined Meta, and how Akash is the reason his life at Meta has been great. He says Akash is just a great storyteller, just a gem of a person, and he is really lucky to have him as a friend, and as one of his best friends in London. He loves him a lot. He also says Alisha is a really sweet woman, and really great, and Akash is very lucky to have Alisha as his partner. He says you are both really happy together, you complement and complete each other, and it would be really great if he could be like you both. He loves you both a lot, and he trusts you both with important things, which is brave, considering you have known him since Meta and still decided to stay friends. Open the next page to find out what the mission is. No excuses, no disappearing, your orders are clear.";
+ var akashAlishaNames = ["Akash", "Alisha"];
+ coverNoteTextAkashAlisha.textContent = "";
+ var akashAlishaRemaining = akashAlishaText;
+ while (akashAlishaRemaining.length) {
+ var aaIdx = -1;
+ var aaName = null;
+ akashAlishaNames.forEach(function (n) {
+ var idx = akashAlishaRemaining.indexOf(n);
+ if (idx !== -1 && (aaIdx === -1 || idx < aaIdx)) { aaIdx = idx; aaName = n; }
+ });
+ if (aaIdx === -1) { coverNoteTextAkashAlisha.appendChild(document.createTextNode(akashAlishaRemaining)); break; }
+ if (aaIdx > 0) coverNoteTextAkashAlisha.appendChild(document.createTextNode(akashAlishaRemaining.slice(0, aaIdx)));
+ var aaSpan = document.createElement("span");
+ aaSpan.className = "cover-guest";
+ aaSpan.textContent = aaName;
+ coverNoteTextAkashAlisha.appendChild(aaSpan);
+ akashAlishaRemaining = akashAlishaRemaining.slice(aaIdx + aaName.length);
+ }
+ coverNoteTextAkashAlisha.parentElement.classList.add("long");
+ }
+
  /* ----- cover: tap to open ----- */
  var cover = document.getElementById("cover");
  var openBtn = document.getElementById("openBtn");
@@ -937,7 +964,9 @@
  var msg = rsvpMsg.value.trim();
  if (msg) rsvpBtn.href = "https://wa.me/447787001858?text=" + encodeURIComponent(msg);
  }
- if (guest) {
+ if (isAkashAlishaInvite) {
+ rsvpMsg.value = "Baboi Arjav! It's Akash and Alisha. I'm in for the wedding mission, 27 to 29 January 2027. Reporting for duty!";
+ } else if (guest) {
  rsvpMsg.value = "Baboi Arjav! It's " + (guest.toLowerCase() === "kaluauriane" ? "Kalu and Auriane" : guest) + ". I'm in for the wedding mission, 27 to 29 January 2027. Reporting for duty!";
  }
  rsvpMsg.addEventListener("input", syncRSVP);
@@ -968,9 +997,12 @@
 
  var guestRaw = (params.get("to") || "").trim().slice(0, 40);
  var guestKey = guestRaw.toLowerCase();
+ var inviteRaw = (params.get("invite") || "").trim().toLowerCase().slice(0, 40);
+ var isAkashAlishaInviteGu = inviteRaw === "a83kx9m2";
  var personalised = ["praveen","monit","drupad","dulle","himasiddharth","patanclosefriends","ravi","sravani","oj","deepanshu","kaluauriane","manthan"];
- var isPersonalised = personalised.indexOf(guestKey) !== -1;
- var displayGuest = guestKey === "patanclosefriends" ? "Jainish, Neel, Nishi and Het" : guestKey === "kaluauriane" ? "Kalu and Auriane" : guestRaw;
+ var isPersonalised = isAkashAlishaInviteGu || personalised.indexOf(guestKey) !== -1;
+ var displayGuest = isAkashAlishaInviteGu ? "Akash and Alisha" : guestKey === "patanclosefriends" ? "Jainish, Neel, Nishi and Het" : guestKey === "kaluauriane" ? "Kalu and Auriane" : guestRaw;
+ var hasGuestDisplay = isAkashAlishaInviteGu || !!guestRaw;
 
  function setText(el, txt) { if (el) el.textContent = txt; }
  function firstText(el, txt) { if (el && el.childNodes.length && el.childNodes[0].nodeType === 3) el.childNodes[0].textContent = txt; }
@@ -981,14 +1013,14 @@
  }
  setText(document.getElementById("openBtn"), "તમારા આદેશો ખોલવા ટેપ કરો");
  document.getElementById("cover").setAttribute("aria-label", "આમંત્રણનું પહેલું પાનું");
- document.title = guestRaw ? ("નમસ્તે " + displayGuest + "! Arjav & Siddhi નું લગ્ન મિશન") : "Arjav & Siddhi: લગ્નનું મિશન";
+ document.title = hasGuestDisplay ? ("નમસ્તે " + displayGuest + "! Arjav & Siddhi નું લગ્ન મિશન") : "Arjav & Siddhi: લગ્નનું મિશન";
 
  /* ----- hero ----- */
  setText(document.querySelector(".hero .classified"), "જાહેર કરાયેલ · ફક્ત તમારી આંખો (અને ગોગલ્સ) માટે");
  var greeting = document.getElementById("greeting");
  firstText(greeting, "નમસ્તે, ");
  var guestNameEl = document.getElementById("guestName");
- if (guestNameEl && !guestRaw) setText(guestNameEl, "આદરણીય મહેમાન");
+ if (guestNameEl && !hasGuestDisplay) setText(guestNameEl, "આદરણીય મહેમાન");
  var missionLine = document.querySelector(".hero .mission-line");
  if (missionLine) missionLine.innerHTML = "ઓપરેશન: <span style=\"color:var(--red);\">તેમના લગ્ન કરાવો</span> · 27–29 જાન્યુઆરી 2027 · ગુજરાત, ભારત";
  var chips = document.querySelectorAll(".hero-dates .chip");
@@ -1136,7 +1168,7 @@
  var rsvpMsgEl = document.getElementById("rsvpMsg");
  var rsvpBtnEl = document.getElementById("rsvpBtn");
  if (rsvpMsgEl && rsvpBtnEl) {
- var gujMsg = guestRaw ? ("નમસ્તે Arjav! હું " + displayGuest + " છું. હું લગ્નના મિશન માટે આવું છું, 27 થી 29 જાન્યુઆરી 2027. હાજર રહીશ!") : "નમસ્તે Arjav! હું લગ્નના મિશન માટે આવું છું, 27 થી 29 જાન્યુઆરી 2027. હાજર રહીશ!";
+ var gujMsg = hasGuestDisplay ? ("નમસ્તે Arjav! હું " + displayGuest + " છું. હું લગ્નના મિશન માટે આવું છું, 27 થી 29 જાન્યુઆરી 2027. હાજર રહીશ!") : "નમસ્તે Arjav! હું લગ્નના મિશન માટે આવું છું, 27 થી 29 જાન્યુઆરી 2027. હાજર રહીશ!";
  rsvpMsgEl.value = gujMsg;
  rsvpBtnEl.href = "https://wa.me/447787001858?text=" + encodeURIComponent(gujMsg);
  rsvpMsgEl.addEventListener("input", function () {
