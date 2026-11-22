@@ -852,6 +852,13 @@
  coverNoteTextKaluAuriane.parentElement.classList.add("long");
  }
 
+ /* ----- Manthan-only cover note: personalised mission note, wedding not revealed ----- */
+ if (guest.toLowerCase() === "manthan") {
+ var coverNoteTextManthan = document.getElementById("coverNoteText");
+ setCoverNote(coverNoteTextManthan, "Hey Manthan, you have been chosen by Arjav for a very important mission. Yes, chosen, not asked, chosen, so there is no escape now. Arjav says you are his brother, one of his closest brothers, and honestly, he talks about you a lot. He says you are younger than him, and you have been a great brother growing up. He says he really likes talking to you on the phone, and he loves that you are working as a software engineer at HDFC, which, according to him, proves you are smart, even if you do not always listen to him. And on a lighter note, he has some advice for you, change the company, do not go after girls, and do not let girls ruin your mood. He says he is saying this as your elder brother, so you have to listen, at least for this mission. He loves you a lot, and he trusts you with important things, which is brave, considering you are his younger brother and you will probably ignore his advice anyway. Open the next page to find out what the mission is. No excuses, no disappearing, your orders are clear.", "Manthan");
+ coverNoteTextManthan.parentElement.classList.add("long");
+ }
+
  /* ----- cover: tap to open ----- */
  var cover = document.getElementById("cover");
  var openBtn = document.getElementById("openBtn");
