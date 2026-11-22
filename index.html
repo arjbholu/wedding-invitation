@@ -685,8 +685,9 @@
  var isAkashAlishaInvite = invite === "a83kx9m2";
  var isBrijeshAnamikaInvite = invite === "b7r2k8m4";
  var isMilindInvite = invite === "m9k3t7v2";
- if (isAkashAlishaInvite || isBrijeshAnamikaInvite || isMilindInvite || guest) {
- var displayGuest = isAkashAlishaInvite ? "Akash and Alisha" : isBrijeshAnamikaInvite ? "Brijesh and Anamika" : isMilindInvite ? "Milind" : guest.toLowerCase() === "patanclosefriends" ? "Jainish, Neel, Nishi and Het" : guest.toLowerCase() === "kaluauriane" ? "Kalu and Auriane" : guest;
+ var isDarshanInvite = invite === "d8p4x6z1";
+ if (isAkashAlishaInvite || isBrijeshAnamikaInvite || isMilindInvite || isDarshanInvite || guest) {
+ var displayGuest = isAkashAlishaInvite ? "Akash and Alisha" : isBrijeshAnamikaInvite ? "Brijesh and Anamika" : isMilindInvite ? "Milind" : isDarshanInvite ? "Darshan" : guest.toLowerCase() === "patanclosefriends" ? "Jainish, Neel, Nishi and Het" : guest.toLowerCase() === "kaluauriane" ? "Kalu and Auriane" : guest;
  document.getElementById("guestName").textContent = displayGuest;
  document.getElementById("coverGuestName").textContent = displayGuest;
  document.title = "Baboi " + displayGuest + "! Arjav & Siddhi's Wedding Mission";
@@ -920,6 +921,13 @@
  coverNoteTextMilind.parentElement.classList.add("long");
  }
 
+ /* ----- Darshan invite-code cover note: invite-code only, wedding not revealed ----- */
+ if (isDarshanInvite) {
+ var coverNoteTextDarshan = document.getElementById("coverNoteText");
+ setCoverNote(coverNoteTextDarshan, "Hey Darshan, you have been chosen by Arjav for a very important mission. Yes, chosen, not asked, chosen, so there is no escape now. Arjav says you are a good friend of his in London, and honestly, he talks about you a lot. He says he has had crazy moments with you, right from the London to Paris bike trip, which was really amazing, and he had a great time hanging out with you. He says he really appreciates how you are as a person, you are really sorted in your life, and you know exactly what you are doing, which, according to him, is a rare skill. He also says you are one of the fittest people he knows, which makes him feel both impressed and a little bit lazy at the same time. He says hanging out with you is always fun, always a little bit crazy, and always worth it. He trusts you with important things, which is brave, considering you will probably cycle to this mission faster than he can walk to it. Open the next page to find out what the mission is. No excuses, no disappearing, your orders are clear.", "Darshan");
+ coverNoteTextDarshan.parentElement.classList.add("long");
+ }
+
  /* ----- cover: tap to open ----- */
  var cover = document.getElementById("cover");
  var openBtn = document.getElementById("openBtn");
@@ -1004,6 +1012,8 @@
  rsvpMsg.value = "Baboi Arjav! It's Brijesh and Anamika. I'm in for the wedding mission, 27 to 29 January 2027. Reporting for duty!";
  } else if (isMilindInvite) {
  rsvpMsg.value = "Baboi Arjav! It's Milind. I'm in for the wedding mission, 27 to 29 January 2027. Reporting for duty!";
+ } else if (isDarshanInvite) {
+ rsvpMsg.value = "Baboi Arjav! It's Darshan. I'm in for the wedding mission, 27 to 29 January 2027. Reporting for duty!";
  } else if (guest) {
  rsvpMsg.value = "Baboi Arjav! It's " + (guest.toLowerCase() === "kaluauriane" ? "Kalu and Auriane" : guest) + ". I'm in for the wedding mission, 27 to 29 January 2027. Reporting for duty!";
  }
@@ -1039,10 +1049,11 @@
  var isAkashAlishaInviteGu = inviteRaw === "a83kx9m2";
  var isBrijeshAnamikaInviteGu = inviteRaw === "b7r2k8m4";
  var isMilindInviteGu = inviteRaw === "m9k3t7v2";
+ var isDarshanInviteGu = inviteRaw === "d8p4x6z1";
  var personalised = ["praveen","monit","drupad","dulle","himasiddharth","patanclosefriends","ravi","sravani","oj","deepanshu","kaluauriane","manthan"];
- var isPersonalised = isAkashAlishaInviteGu || isBrijeshAnamikaInviteGu || isMilindInviteGu || personalised.indexOf(guestKey) !== -1;
- var displayGuest = isAkashAlishaInviteGu ? "Akash and Alisha" : isBrijeshAnamikaInviteGu ? "Brijesh and Anamika" : isMilindInviteGu ? "Milind" : guestKey === "patanclosefriends" ? "Jainish, Neel, Nishi and Het" : guestKey === "kaluauriane" ? "Kalu and Auriane" : guestRaw;
- var hasGuestDisplay = isAkashAlishaInviteGu || isBrijeshAnamikaInviteGu || isMilindInviteGu || !!guestRaw;
+ var isPersonalised = isAkashAlishaInviteGu || isBrijeshAnamikaInviteGu || isMilindInviteGu || isDarshanInviteGu || personalised.indexOf(guestKey) !== -1;
+ var displayGuest = isAkashAlishaInviteGu ? "Akash and Alisha" : isBrijeshAnamikaInviteGu ? "Brijesh and Anamika" : isMilindInviteGu ? "Milind" : isDarshanInviteGu ? "Darshan" : guestKey === "patanclosefriends" ? "Jainish, Neel, Nishi and Het" : guestKey === "kaluauriane" ? "Kalu and Auriane" : guestRaw;
+ var hasGuestDisplay = isAkashAlishaInviteGu || isBrijeshAnamikaInviteGu || isMilindInviteGu || isDarshanInviteGu || !!guestRaw;
 
  function setText(el, txt) { if (el) el.textContent = txt; }
  function firstText(el, txt) { if (el && el.childNodes.length && el.childNodes[0].nodeType === 3) el.childNodes[0].textContent = txt; }
