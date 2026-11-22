@@ -948,5 +948,233 @@
  track.textContent = track.textContent + track.textContent;
  })();
  </script>
+ <script>
+ (function () {
+ "use strict";
+ var params = new URLSearchParams(window.location.search);
+ var lang = (params.get("lang") || "").trim().toLowerCase();
+ if (lang !== "guj" && lang !== "gu") return;
+
+ document.documentElement.lang = "gu";
+
+ /* Load a Gujarati-capable font only for the Gujarati version */
+ var fontLink = document.createElement("link");
+ fontLink.rel = "stylesheet";
+ fontLink.href = "https://fonts.googleapis.com/css2?family=Noto+Sans+Gujarati:wght@400;600;700;800&display=swap";
+ document.head.appendChild(fontLink);
+ var fontStyle = document.createElement("style");
+ fontStyle.textContent = "body,h1,h2,h3,h4,.display,.btn,.tab-btn,.kicker,.chip,.open-btn{font-family:'Noto Sans Gujarati','Baloo 2','Nunito',system-ui,sans-serif;}";
+ document.head.appendChild(fontStyle);
+
+ var guestRaw = (params.get("to") || "").trim().slice(0, 40);
+ var guestKey = guestRaw.toLowerCase();
+ var personalised = ["praveen","monit","drupad","dulle","himasiddharth","patanclosefriends","ravi","sravani","oj","deepanshu","kaluauriane","manthan"];
+ var isPersonalised = personalised.indexOf(guestKey) !== -1;
+ var displayGuest = guestKey === "patanclosefriends" ? "Jainish, Neel, Nishi and Het" : guestKey === "kaluauriane" ? "Kalu and Auriane" : guestRaw;
+
+ function setText(el, txt) { if (el) el.textContent = txt; }
+ function firstText(el, txt) { if (el && el.childNodes.length && el.childNodes[0].nodeType === 3) el.childNodes[0].textContent = txt; }
+
+ /* ----- cover: common note only, personalised notes stay exactly as they are ----- */
+ if (!isPersonalised) {
+ setText(document.getElementById("coverNoteText"), "નમસ્તે, અર્જવે તમને એક મિશન માટે પસંદ કર્યા છે. તમે તેમના સૌથી નજીકના મિત્રોમાંના એક છો, અને તે તમારા વિશે ઘણું વાત કરે છે. તો આ ખોલો, તે મહત્વનું છે.");
+ }
+ setText(document.getElementById("openBtn"), "તમારા આદેશો ખોલવા ટેપ કરો");
+ document.getElementById("cover").setAttribute("aria-label", "આમંત્રણનું પહેલું પાનું");
+ document.title = guestRaw ? ("નમસ્તે " + displayGuest + "! Arjav & Siddhi નું લગ્ન મિશન") : "Arjav & Siddhi: લગ્નનું મિશન";
+
+ /* ----- hero ----- */
+ setText(document.querySelector(".hero .classified"), "જાહેર કરાયેલ · ફક્ત તમારી આંખો (અને ગોગલ્સ) માટે");
+ var greeting = document.getElementById("greeting");
+ firstText(greeting, "નમસ્તે, ");
+ var guestNameEl = document.getElementById("guestName");
+ if (guestNameEl && !guestRaw) setText(guestNameEl, "આદરણીય મહેમાન");
+ var missionLine = document.querySelector(".hero .mission-line");
+ if (missionLine) missionLine.innerHTML = "ઓપરેશન: <span style=\"color:var(--red);\">તેમના લગ્ન કરાવો</span> · 27–29 જાન્યુઆરી 2027 · ગુજરાત, ભારત";
+ var chips = document.querySelectorAll(".hero-dates .chip");
+ if (chips[0]) chips[0].textContent = "રાત 0 · Wed 27 Jan · Patan";
+ if (chips[1]) chips[1].textContent = "દિવસ 1 · Thu 28 Jan · Patan";
+ if (chips[2]) chips[2].textContent = "દિવસ 2 · Fri 29 Jan · Mehsana";
+ setText(document.querySelector(".countdown .cd-label"), "હસ્ત મેળાપ માટે કાઉન્ટડાઉન · મુખ્ય મિશન");
+ var cdSpans = document.querySelectorAll(".cd-cell span");
+ var cdUnits = ["દિવસ", "કલાક", "મિનિટ", "સેકન્ડ"];
+ cdSpans.forEach(function (s, i) { if (cdUnits[i]) s.textContent = cdUnits[i]; });
+ setText(document.getElementById("cdDone"), "શરૂ થઈ ગયું છે. તરત જ મંડપમાં હાજર થાઓ.");
+
+ var sections = document.querySelectorAll("section");
+
+ /* ----- meet the couple ----- */
+ if (sections[0]) {
+ setText(sections[0].querySelector(".kicker"), "બે મુખ્ય પાત્રો");
+ setText(sections[0].querySelector(".title"), "યુગલને મળો");
+ var coupleCards = sections[0].querySelectorAll(".your-words");
+ if (coupleCards[0]) {
+ var cp0 = coupleCards[0].querySelectorAll("p");
+ if (cp0[0]) cp0[0].textContent = "અર્જવ: વરરાજા";
+ if (cp0[1]) cp0[1].textContent = "અર્જવ, Meta માં સોફ્ટવેર એન્જિનિયર છે, પણ તેમને Instagram પસંદ નથી. ક્યારેક જિમ જાય છે, પણ તેમની પાસે સિક્સ પેક નહીં, ફેમિલી પેક છે.";
+ }
+ if (coupleCards[1]) {
+ var cp1 = coupleCards[1].querySelectorAll("p");
+ if (cp1[0]) cp1[0].textContent = "સિદ્ધિ: કન્યા";
+ if (cp1[1]) cp1[1].textContent = "સિદ્ધિ, વ્યવસાયે એકાઉન્ટન્ટ છે પણ તેમને ઓડિટિંગ પસંદ નથી. પોતાને ફૂડી કહે છે પણ શાકાહારી છે અને મશરૂમ પસંદ નથી.";
+ }
+ }
+
+ /* ----- mission schedule ----- */
+ if (sections[1]) {
+ setText(sections[1].querySelector(".kicker"), "મિશનની યોજના");
+ setText(sections[1].querySelector(".title"), "સાત ઓપરેશન. એક રાત વહેલી શરૂઆત.");
+ setText(sections[1].querySelector(".lede"), "દરેક પ્રસંગ શું છે અને શું પહેરવું. દિવસ પસંદ કરો અને હાજર રહો.");
+ var tabsEl = sections[1].querySelector(".tabs");
+ if (tabsEl) tabsEl.setAttribute("aria-label", "લગ્નના દિવસો");
+ var tab1Small = document.querySelector("#tab-day1 small");
+ if (tab1Small) tab1Small.textContent = "PATAN · તૈયારીનો દિવસ";
+ var tab2Small = document.querySelector("#tab-day2 small");
+ if (tab2Small) tab2Small.textContent = "MEHSANA · મુખ્ય પ્રસંગ";
+ setText(document.querySelector("#panel-day0 .day-head h3"), "રાત 0: બુધવાર 27 જાન્યુઆરી 2027");
+ setText(document.querySelector("#panel-day1 .day-head h3"), "દિવસ 1: ગુરુવાર 28 જાન્યુઆરી 2027");
+ setText(document.querySelector("#panel-day2 .day-head h3"), "દિવસ 2: શુક્રવાર 29 જાન્યુઆરી 2027");
+
+ var hqP = document.querySelector("#panel-day1 .day-head + div p");
+ if (hqP) hqP.innerHTML = "<span style=\"font-family:'Noto Sans Gujarati','Baloo 2',sans-serif;\">સવારનું મુખ્ય સ્થળ: ઘર</span> · પહેલા બે ઓપરેશન અર્જવના ઘરે થશે: 3 Rampark Society, Pragati Nagar, Patan 384265. બપોર પછી બધા Ashirwad Party Plot તરફ જશે.";
+ var hqBtn = document.querySelector("#panel-day1 .day-head + div a.btn");
+ setText(hqBtn, "Google Maps માં ઘર ખોલો");
+
+ var eventsData = [
+ { code: "ઓપરેશન 00 · ગુપ્ત શરૂઆત", title: "મહેંદી", jokeA: "શરૂઆત માટે નાનો પ્રસંગ. ", jokeB: "મહેંદી, સંગીત, ફક્ત નજીકના સ્વજનો. આવો, હાથ પર મહેંદી કરાવો અને મિશન માટે તૈયાર થાઓ.", wear: "આરામદાયક ઉત્સવના કપડાં. લીલા અને તેજસ્વી રંગો શ્રેષ્ઠ રહેશે." },
+ { code: "ઓપરેશન 01 · શરૂઆતની ક્ષણ", title: "લગ્ન વધાવવાનું મુહૂર્ત", jokeA: "એ ક્ષણ જ્યાંથી આખું મિશન શરૂ થાય છે. ", jokeB: "સદીઓ જૂની પરંપરા, અને હંમેશા સાચી.", wear: "પરંપરાગત, સવાર માટે યોગ્ય. કુર્તો અથવા સાડી, શાંત રંગો." },
+ { code: "ઓપરેશન 02 · પહેલા શાંતિ", title: "ગણેશ સ્થાપન / ગ્રહ શાંતિ", jokeA: "ધમાલ પહેલા ગ્રહોને શાંત કરવા. ", jokeB: "નવ ગ્રહોને એક શાંત પૂજાથી મનાવવામાં આવશે. સમય 8:30 થી 11:00 AM.", wear: "પરંપરાગત અને શાંત. આ શાંત પ્રસંગ છે, ધમાલ બપોર માટે રાખો." },
+ { code: "ઓપરેશન 03 · પૂરા પીળા થાઓ", title: "હળદર", jokeA: "એ પ્રસંગ જ્યાં બધા પીળા થઈ જાય છે. ", jokeB: "હળદર યુગલ પર, મહેમાનો પર અને તમારા કપડાં પર. બચવું મુશ્કેલ છે.", wear: "પીળા અથવા સફેદ, આરામદાયક અને હળદર લાગે તેવા. કિંમતી કપડાં ઘરે જ રાખો." },
+ { code: "ઓપરેશન 04 · ભોજનનો વિરામ", title: "વરેઠી / ભોજન સમારંભ", jokeA: "ભોજનનો વિરામ. ", jokeB: "આજે રાત્રે બરાબર જમો, આવતીકાલે મુખ્ય મિશન છે.", wear: "સામાન્ય અથવા પરંપરાગત, બંને ચાલશે. હળદર પછી તમને ગમે તે પહેરો." },
+ { code: "ઓપરેશન 05 · જાનની શરૂઆત", title: "જાન પ્રસ્થાન", jokeA: "વરરાજાની જાન નીકળે છે. ", jokeB: "બધા સ્વજનો સાથે, ઢોલ પૂરા અવાજે. તમે માત્ર મહેમાન નથી, તમે ઉત્સાહનો ભાગ છો.", wear: "તમારા શ્રેષ્ઠ પરંપરાગત કપડાં, અહીંથી કેમેરા શરૂ થઈ જશે." },
+ { code: "ઓપરેશન 06 · મુખ્ય મિશન", title: "હસ્ત મેળાપ: લગ્ન", jokeA: "જેના માટે આખું ઓપરેશન છે. ", jokeB: "હસ્ત મેળાપ થશે, બે પરિવારો એક થશે. લાગણીઓ આવકાર્ય છે, નૃત્ય તો કરવું જ પડશે.", wear: "તમારી પાસે હોય તે શ્રેષ્ઠ પરંપરાગત પોશાક, અને નૃત્ય માટે યોગ્ય પગરખાં. શેરવાની, સાડી, લહેંગો, સૂટ, ભવ્ય રીતે તૈયાર થાઓ." }
+ ];
+ var eventEls = sections[1].querySelectorAll(".event");
+ eventEls.forEach(function (ev, i) {
+ var d = eventsData[i];
+ if (!d) return;
+ setText(ev.querySelector(".codename"), d.code);
+ setText(ev.querySelector("h4"), d.title);
+ var joke = ev.querySelector(".joke");
+ if (joke) {
+ firstText(joke, d.jokeA);
+ var note = joke.querySelector(".banana-note");
+ setText(note, d.jokeB);
+ }
+ var rows = ev.querySelectorAll(".event-meta .row");
+ rows.forEach(function (row, ri) {
+ var lbl = row.querySelector(".lbl");
+ if (lbl) lbl.textContent = lbl.classList.contains("wear") ? "પહેરવેશ" : "સ્થળ";
+ if (ri === 1) {
+ var val = row.querySelectorAll("span")[1];
+ setText(val, d.wear);
+ }
+ });
+ var mapBtn = ev.querySelector(".event-actions a.btn");
+ setText(mapBtn, "Google Maps માં ખોલો");
+ });
+ var mehndiBadge = eventEls[0] ? eventEls[0].querySelector(".time-badge b") : null;
+ setText(mehndiBadge, "રાત");
+ }
+
+ /* ----- dress code ----- */
+ if (sections[2]) {
+ setText(sections[2].querySelector(".kicker"), "પોશાકના નિયમો");
+ setText(sections[2].querySelector(".title"), "દરેક પ્રસંગે શું પહેરવું");
+ setText(sections[2].querySelector(".lede"), "દરેક પ્રસંગ માટેનો પોશાક અહીં, પ્રસંગ પ્રમાણે આપેલો છે.");
+ var dressData = [
+ { title: "મહેંદી, 27મી રાત્રે", desc: "આરામદાયક ઉત્સવના કપડાં, લીલા અને તેજસ્વી રંગો. નાનો પ્રસંગ, સરળ પોશાક.", verdict: "નિષ્કર્ષ: મહેંદી માટે હાથ ખાલી રાખો." },
+ { title: "ગણેશ સ્થાપન / ગ્રહ શાંતિ", desc: "પરંપરાગત, શાંત રંગો, સવાર માટે યોગ્ય. કુર્તો-પાયજામો, સાડી, સલવાર, શાંત દેખાવ રાખો.", verdict: "નિષ્કર્ષ: ફક્ત શાંત વાતાવરણ." },
+ { title: "હળદર", desc: "પીળા અથવા સફેદ, આરામદાયક અને હળદર માટે યોગ્ય. ડ્રાય-ક્લીનિંગની જરૂર પડે તેવા કપડાં હળદર માટે નથી.", verdict: "નિષ્કર્ષ: તમે આવ્યા તેના કરતાં વધુ પીળા થઈને જશો." },
+ { title: "વરેઠી / ભોજન સમારંભ, 28મી", desc: "સામાન્ય અથવા પરંપરાગત, બંને ચાલશે. ઘાટા રંગો અને થોડી ચમક, અથવા સરળ પોશાક, બસ જમવા માટે આરામ રાખો.", verdict: "નિષ્કર્ષ: ભોજન અને ફોટા બંને માટે તૈયાર થાઓ." },
+ { title: "લગ્ન", desc: "તમારો શ્રેષ્ઠ પરંપરાગત પોશાક, અને ઢોલ બંધ થાય ત્યાં સુધી નૃત્ય કરી શકાય તેવા પગરખાં.", verdict: "નિષ્કર્ષ: ભવ્ય રીતે તૈયાર થવું આવકાર્ય છે." }
+ ];
+ var dressCards = sections[2].querySelectorAll(".dress-card");
+ dressCards.forEach(function (card, i) {
+ var d = dressData[i];
+ if (!d) return;
+ var h3 = card.querySelector("h3");
+ if (h3) {
+ for (var n = 0; n < h3.childNodes.length; n++) {
+ if (h3.childNodes[n].nodeType === 3 && h3.childNodes[n].textContent.trim()) { h3.childNodes[n].textContent = d.title; break; }
+ }
+ }
+ var ps = card.querySelectorAll("p");
+ if (ps[0]) ps[0].textContent = d.desc;
+ setText(card.querySelector(".verdict"), d.verdict);
+ });
+ }
+
+ /* ----- survival guide ----- */
+ if (sections[3]) {
+ setText(sections[3].querySelector(".kicker"), "માર્ગદર્શિકા");
+ setText(sections[3].querySelector(".title"), "મહેમાનો માટે માર્ગદર્શિકા");
+ var rulesData = [
+ { b: "બધા પ્રસંગોમાં આવો.", rest: " 27મીની મહેંદી રાત શરૂઆત છે, મુખ્ય દિવસો પણ ચૂકશો નહીં." },
+ { b: "હળદરનો નિયમ:", rest: " 28મીએ બપોરે 3 વાગ્યે જે પહેરશો તે યાદગીરી બની જશે." },
+ { b: "Patan 27 અને 28, Mehsana 29.", rest: " નીકળતા પહેલા નકશાના બટન જોઈ લો." },
+ { b: "ભોજન સમારંભમાં બરાબર જમો.", rest: " 28મીનું ભોજન મહત્વનું છે." },
+ { b: "શંકા હોય તો પૂછો.", rest: " નીચે Arjav ને WhatsApp પર સંદેશ મોકલો." }
+ ];
+ var ruleItems = sections[3].querySelectorAll(".rules li");
+ ruleItems.forEach(function (li, i) {
+ var d = rulesData[i];
+ if (!d) return;
+ setText(li.querySelector("b"), d.b);
+ for (var n = 0; n < li.childNodes.length; n++) {
+ if (li.childNodes[n].nodeType === 3 && li.childNodes[n].textContent.trim()) li.childNodes[n].textContent = d.rest;
+ }
+ });
+ }
+
+ /* ----- RSVP ----- */
+ if (sections[4]) {
+ setText(document.getElementById("rsvpTitle"), "તમારી હાજરીની પુષ્ટિ કરો");
+ setText(sections[4].querySelector(".rsvp-card p"), "એક ટેપથી Arjav ને WhatsApp ખુલશે, તમારો સંદેશ તૈયાર હશે. ફેરફાર કરો, સાથે આવનારાઓને ઉમેરો અને મોકલો.");
+ setText(document.getElementById("rsvpBtn"), "WhatsApp પર જવાબ આપો");
+ setText(sections[4].querySelector(".rsvp-edit label"), "ફક્ત એક દિવસ આવો છો કે આખા પરિવાર સાથે? સંદેશ બદલો:");
+ var rsvpMsgEl = document.getElementById("rsvpMsg");
+ var rsvpBtnEl = document.getElementById("rsvpBtn");
+ if (rsvpMsgEl && rsvpBtnEl) {
+ var gujMsg = guestRaw ? ("નમસ્તે Arjav! હું " + displayGuest + " છું. હું લગ્નના મિશન માટે આવું છું, 27 થી 29 જાન્યુઆરી 2027. હાજર રહીશ!") : "નમસ્તે Arjav! હું લગ્નના મિશન માટે આવું છું, 27 થી 29 જાન્યુઆરી 2027. હાજર રહીશ!";
+ rsvpMsgEl.value = gujMsg;
+ rsvpBtnEl.href = "https://wa.me/447787001858?text=" + encodeURIComponent(gujMsg);
+ rsvpMsgEl.addEventListener("input", function () {
+ var m = rsvpMsgEl.value.trim();
+ if (m) rsvpBtnEl.href = "https://wa.me/447787001858?text=" + encodeURIComponent(m);
+ });
+ }
+ }
+
+ /* ----- print card ----- */
+ var printZone = document.querySelector(".print-zone");
+ if (printZone) {
+ setText(printZone.querySelector(".kicker"), "કાગળનું સંસ્કરણ");
+ setText(document.getElementById("printTitle"), "છાપેલું પસંદ છે?");
+ setText(printZone.querySelector(".lede"), "આખું મિશન એક પાના પર. સ્ક્રીનશોટ લો, અથવા છાપો / PDF તરીકે સાચવો.");
+ setText(printZone.querySelector(".pc-kicker"), "તેમના પરિવારો સાથે");
+ setText(printZone.querySelector(".pc-date"), "બુધવાર 27 થી શુક્રવાર 29 જાન્યુઆરી 2027 · Patan & Mehsana, Gujarat");
+ var pcData = [
+ { b: "Wed 27 Jan · રાત", s: "મહેંદી · Arjav's home, Patan" },
+ { b: null, s: "લગ્ન વધાવવાનું મુહૂર્ત · Arjav's home, Patan" },
+ { b: null, s: "ગણેશ સ્થાપન / ગ્રહ શાંતિ · Arjav's home, Patan" },
+ { b: null, s: "હળદર · Ashirwad Party Plot, Patan" },
+ { b: null, s: "વરેઠી / ભોજન સમારંભ · Ashirwad Party Plot, Chanasma Highway, Patan" },
+ { b: null, s: "જાન પ્રસ્થાન · Mehsana" },
+ { b: null, s: "હસ્ત મેળાપ · Green Meadows Party Plot, Ahmedabad–Mehsana Highway, Mehsana" }
+ ];
+ var pcRows = printZone.querySelectorAll(".pc-row");
+ pcRows.forEach(function (row, i) {
+ var d = pcData[i];
+ if (!d) return;
+ if (d.b) setText(row.querySelector("b"), d.b);
+ setText(row.querySelector("span"), d.s);
+ });
+ setText(printZone.querySelector(".pc-foot"), "28મીની સવારે Arjav ના ઘરે, 3 Rampark Society, Pragati Nagar, Patan 384265 · પોશાક: બધા પ્રસંગોમાં પરંપરાગત · હળદર માટે પીળા · Arjav ને WhatsApp પર જવાબ આપો");
+ }
+
+ setText(document.querySelector("footer .fine"), "મિશનની માહિતી પૂરી થાય છે. Patan માં મળીએ!");
+ })();
+ </script>
  </body>
 </html>
