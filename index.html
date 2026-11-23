@@ -689,8 +689,9 @@
  var isPriyanshuDeepitInvite = invite === "p7v3n8q2";
  var isChiragInvite = invite === "c6t2r9x4";
  var isNagpalInvite = invite === "n5k8p2w7";
- if (isAkashAlishaInvite || isBrijeshAnamikaInvite || isMilindInvite || isDarshanInvite || isPriyanshuDeepitInvite || isChiragInvite || isNagpalInvite || guest) {
- var displayGuest = isAkashAlishaInvite ? "Akash and Alisha" : isBrijeshAnamikaInvite ? "Brijesh and Anamika" : isMilindInvite ? "Milind" : isDarshanInvite ? "Darshan" : isPriyanshuDeepitInvite ? "Priyanshu and Deepit" : isChiragInvite ? "Chirag" : isNagpalInvite ? "Nagpal" : guest.toLowerCase() === "patanclosefriends" ? "Jainish, Neel, Nishi and Het" : guest.toLowerCase() === "kaluauriane" ? "Kalu and Auriane" : guest;
+ var isHardikInvite = invite === "h3k9m4x7";
+ if (isAkashAlishaInvite || isBrijeshAnamikaInvite || isMilindInvite || isDarshanInvite || isPriyanshuDeepitInvite || isChiragInvite || isNagpalInvite || isHardikInvite || guest) {
+ var displayGuest = isAkashAlishaInvite ? "Akash and Alisha" : isBrijeshAnamikaInvite ? "Brijesh and Anamika" : isMilindInvite ? "Milind" : isDarshanInvite ? "Darshan" : isPriyanshuDeepitInvite ? "Priyanshu and Deepit" : isChiragInvite ? "Chirag" : isNagpalInvite ? "Nagpal" : isHardikInvite ? "Hardik" : guest.toLowerCase() === "patanclosefriends" ? "Jainish, Neel, Nishi and Het" : guest.toLowerCase() === "kaluauriane" ? "Kalu and Auriane" : guest;
  document.getElementById("guestName").textContent = displayGuest;
  document.getElementById("coverGuestName").textContent = displayGuest;
  document.title = "Baboi " + displayGuest + "! Arjav & Siddhi's Wedding Mission";
@@ -970,6 +971,13 @@
  coverNoteTextNagpal.parentElement.classList.add("long");
  }
 
+ /* ----- Hardik invite-code cover note: invite-code only, wedding not revealed ----- */
+ if (isHardikInvite) {
+ var coverNoteTextHardik = document.getElementById("coverNoteText");
+ setCoverNote(coverNoteTextHardik, "Hey Hardik, you have been chosen by Arjav for a very important mission. Yes, chosen, not asked, chosen, so there is no escape now. Arjav says you are a good friend of his in London, and honestly, he talks about you a lot. He says he has known you for a few years now, and he really likes hanging out with you, and he really appreciates having you as a friend. He says you have done a lot of house parties together, hung out a lot on Fridays, and every time you hang out, it is great. He still remembers coming over to your place, Cromarty Villas, which, according to him, is always a good night. He also says he likes your energy, you are very extrovert, you always have plans for the weekend, and you are always up for any activity, which is exactly what he likes about you. He trusts you with important things, which is brave, considering you will probably turn this mission into a weekend plan too. Open the next page to find out what the mission is. No excuses, no disappearing, your orders are clear.", "Hardik");
+ coverNoteTextHardik.parentElement.classList.add("long");
+ }
+
  /* ----- cover: tap to open ----- */
  var cover = document.getElementById("cover");
  var openBtn = document.getElementById("openBtn");
@@ -1062,6 +1070,8 @@
  rsvpMsg.value = "Baboi Arjav! It's Chirag. I'm in for the wedding mission, 27 to 29 January 2027. Reporting for duty!";
  } else if (isNagpalInvite) {
  rsvpMsg.value = "Baboi Arjav! It's Nagpal. I'm in for the wedding mission, 27 to 29 January 2027. Reporting for duty!";
+ } else if (isHardikInvite) {
+ rsvpMsg.value = "Baboi Arjav! It's Hardik. I'm in for the wedding mission, 27 to 29 January 2027. Reporting for duty!";
  } else if (guest) {
  rsvpMsg.value = "Baboi Arjav! It's " + (guest.toLowerCase() === "kaluauriane" ? "Kalu and Auriane" : guest) + ". I'm in for the wedding mission, 27 to 29 January 2027. Reporting for duty!";
  }
@@ -1101,10 +1111,11 @@
  var isPriyanshuDeepitInviteGu = inviteRaw === "p7v3n8q2";
  var isChiragInviteGu = inviteRaw === "c6t2r9x4";
  var isNagpalInviteGu = inviteRaw === "n5k8p2w7";
+ var isHardikInviteGu = inviteRaw === "h3k9m4x7";
  var personalised = ["praveen","monit","drupad","dulle","himasiddharth","patanclosefriends","ravi","sravani","oj","deepanshu","kaluauriane","manthan"];
- var isPersonalised = isAkashAlishaInviteGu || isBrijeshAnamikaInviteGu || isMilindInviteGu || isDarshanInviteGu || isPriyanshuDeepitInviteGu || isChiragInviteGu || isNagpalInviteGu || personalised.indexOf(guestKey) !== -1;
- var displayGuest = isAkashAlishaInviteGu ? "Akash and Alisha" : isBrijeshAnamikaInviteGu ? "Brijesh and Anamika" : isMilindInviteGu ? "Milind" : isDarshanInviteGu ? "Darshan" : isPriyanshuDeepitInviteGu ? "Priyanshu and Deepit" : isChiragInviteGu ? "Chirag" : isNagpalInviteGu ? "Nagpal" : guestKey === "patanclosefriends" ? "Jainish, Neel, Nishi and Het" : guestKey === "kaluauriane" ? "Kalu and Auriane" : guestRaw;
- var hasGuestDisplay = isAkashAlishaInviteGu || isBrijeshAnamikaInviteGu || isMilindInviteGu || isDarshanInviteGu || isPriyanshuDeepitInviteGu || isChiragInviteGu || isNagpalInviteGu || !!guestRaw;
+ var isPersonalised = isAkashAlishaInviteGu || isBrijeshAnamikaInviteGu || isMilindInviteGu || isDarshanInviteGu || isPriyanshuDeepitInviteGu || isChiragInviteGu || isNagpalInviteGu || isHardikInviteGu || personalised.indexOf(guestKey) !== -1;
+ var displayGuest = isAkashAlishaInviteGu ? "Akash and Alisha" : isBrijeshAnamikaInviteGu ? "Brijesh and Anamika" : isMilindInviteGu ? "Milind" : isDarshanInviteGu ? "Darshan" : isPriyanshuDeepitInviteGu ? "Priyanshu and Deepit" : isChiragInviteGu ? "Chirag" : isNagpalInviteGu ? "Nagpal" : isHardikInviteGu ? "Hardik" : guestKey === "patanclosefriends" ? "Jainish, Neel, Nishi and Het" : guestKey === "kaluauriane" ? "Kalu and Auriane" : guestRaw;
+ var hasGuestDisplay = isAkashAlishaInviteGu || isBrijeshAnamikaInviteGu || isMilindInviteGu || isDarshanInviteGu || isPriyanshuDeepitInviteGu || isChiragInviteGu || isNagpalInviteGu || isHardikInviteGu || !!guestRaw;
 
  function setText(el, txt) { if (el) el.textContent = txt; }
  function firstText(el, txt) { if (el && el.childNodes.length && el.childNodes[0].nodeType === 3) el.childNodes[0].textContent = txt; }
